@@ -1,0 +1,51 @@
+
+import random
+
+
+n = int(input('Введите натуральное число: '))   #условие задачи
+max_size = 10                                   #максимальный размер матрицы
+size = [[0, 0]]                                     
+for i in range(n):
+    #задаем размеры матрицы изначально 0х0
+    rows = 0
+    cols = 0
+    #запускаем рандомайзер для размеров до тех пор, пока не сгенерируются размеры,
+    #которых ещё не было. Условие "Размеры массивов не должны совпадать"
+    while ([rows, cols] in size):
+        rows = random.randint(2, max_size)
+        cols = random.randint(2, max_size)
+    size.append([rows, cols])
+    
+    #создаем двумерную матрицу и заполняем рандомными числами от 0 до 100
+    matrix = [[]]
+    for row in range(rows):
+        line = []
+        for col in range(cols):
+            line.append(random.randint(0,100))
+        if (row == 0):
+            matrix[row] = line
+        else:
+            matrix.append(line)
+    
+    # Выполняем сортировку (для сортировки помещаем все числа матрицы в один список)
+    forsort = []                         
+    for row in range(rows):
+        for col in range(cols):
+            forsort.append(matrix[row][col])
+    # Проверяем порядковый номер на четность и в зависимости от этого сортируеем числа
+    # по возрастанию при четном, по убыванию при ничетном
+    if ((i+1)%2 == 0):
+        forsort.sort()
+    else:
+        forsort.sort(reverse=True)
+    # Возвращаем строку с отсортированными числами в вид матрицы
+    matrix = [forsort[j:j+cols] for j in range(0, len(forsort), cols)]
+    
+    # Выводим на экран
+    print ("\t"+str(i+1)+" Matrix("+str(rows)+"x"+str(cols)+")")    #перед матрицей выводим порядковый номер и размерность
+    for row in range(rows):
+        printline=""
+        for col in range (cols):
+            printline += str(matrix[row][col])+"\t"
+        print (printline)
+    print()
